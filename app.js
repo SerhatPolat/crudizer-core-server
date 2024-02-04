@@ -29,7 +29,7 @@ app.use(express.json());
 const itemsCollection = client.db("company").collection("products");
 
 // Create
-app.post("/api/products", async (req, res) => {
+app.post("/api/items", async (req, res) => {
   try {
     const newItem = req.body;
     const result = await itemsCollection.insertOne(newItem);
@@ -40,7 +40,7 @@ app.post("/api/products", async (req, res) => {
 });
 
 // Read (all items)
-app.get("/api/products", async (req, res) => {
+app.get("/api/items", async (req, res) => {
   try {
     const items = await itemsCollection.find().toArray();
     res.json(items);
@@ -50,7 +50,7 @@ app.get("/api/products", async (req, res) => {
 });
 
 // Update
-app.put("/api/products/:id", async (req, res) => {
+app.put("/api/items/:id", async (req, res) => {
   try {
     const itemId = req.params.id;
     const updatedItem = await itemsCollection.findOneAndUpdate(
@@ -65,7 +65,7 @@ app.put("/api/products/:id", async (req, res) => {
 });
 
 // Delete
-app.delete("/api/products/:id", async (req, res) => {
+app.delete("/api/items/:id", async (req, res) => {
   try {
     const itemId = req.params.id;
     await itemsCollection.deleteOne({ _id: new ObjectId(itemId) });
