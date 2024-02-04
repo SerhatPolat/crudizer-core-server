@@ -1,12 +1,14 @@
 const express = require("express");
 const { MongoClient, ObjectId } = require("mongodb");
 const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 const port = 3001;
 
-const uri = "-";
-const client = new MongoClient(uri, {
+const dbConnectionStr = process.env.MONGODB_URI;
+
+const client = new MongoClient(dbConnectionStr, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
