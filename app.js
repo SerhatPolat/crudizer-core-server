@@ -26,7 +26,7 @@ async function connectToDatabase() {
 connectToDatabase();
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: "200mb" })); // limit parameter added to prevent 413 error (related with base64 images)
 
 const itemsCollection = client.db("company").collection("products");
 
@@ -35,7 +35,7 @@ app.post("/api/items", async (req, res) => {
   try {
     const newItem = req.body;
     const result = await itemsCollection.insertOne(newItem);
-    res.status(201).json(result.ops[0]);
+    res.status(201).json({ message: "Item created successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
