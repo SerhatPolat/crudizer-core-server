@@ -41,11 +41,43 @@ app.post("/api/items", async (req, res) => {
   }
 });
 
-// Read (all items)
+// Read (all items) without pagination
+// app.get("/api/items", async (req, res) => {
+//   try {
+//     const items = await itemsCollection.find().toArray();
+//     res.json(items);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });
+
 app.get("/api/items", async (req, res) => {
+  const ITEMS_PER_PAGE = 4; // You can update this according to your requirements
+
   try {
-    const items = await itemsCollection.find().toArray();
-    res.json(items);
+    // Parse the page query parameter from the request, default to 1 if not provided
+    const page = parseInt(req.query.page, 10) || 1;
+
+    // Calculate the skip value based on the current page and items per page
+    const skip = (page - 1) * ITEMS_PER_PAGE;
+
+    const items = await itemsCollection
+      .find()
+      .skip(skip)
+      .limit(ITEMS_PER_PAGE)
+      .toArray();
+
+    // Calculate the total number of items in the collection
+    const totalItems = await itemsCollection.countDocuments();
+
+    // Calculate the total number of pages
+    const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+    res.json({
+      items,
+      currentPage: page,
+      totalPages,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

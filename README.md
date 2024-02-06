@@ -1,3 +1,16 @@
+# crudizer-core
+
+crudizer-core is a fullstack CRUD web app kickstarter which one is includes common essentials:
+
+- E2E data listing (w/ pagination) (Mongo database => Node.js backend => Nuxt 3 & Axios API requests => UI)
+- Ready to use E2E base64 image dataflow
+- Create/Update/Delete transactions for items
+- Ready to use UI for essentials (w/ tailwind config based primary, secondary color usage)
+
+<br>
+<hr>
+<br>
+
 ### Set up environment variables
 
 Set `MONGODB_URI` variable on `.env` file (which one is included in .gitignore):
@@ -30,6 +43,12 @@ app.post("/api/items", async (req, res) => {
 });
 ```
 
+<hr>
+<br>
+
+_This is **backend** repo of crudizer-core, you can reach to **frontend** from here:_ [crudizer-core-client](https://github.com/SerhatPolat/crudizer-core-client)
+
+<br>
 <hr>
 
 Install dependencies:
