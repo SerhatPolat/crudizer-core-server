@@ -41,7 +41,7 @@ app.post("/api/items", async (req, res) => {
   }
 });
 
-// Read (all items) without pagination
+// // Read (all items) without pagination
 // app.get("/api/items", async (req, res) => {
 //   try {
 //     const items = await itemsCollection.find().toArray();
@@ -51,6 +51,7 @@ app.post("/api/items", async (req, res) => {
 //   }
 // });
 
+// Read items with pagination
 app.get("/api/items", async (req, res) => {
   const ITEMS_PER_PAGE = 4; // You can update this according to your requirements
 
@@ -78,6 +79,17 @@ app.get("/api/items", async (req, res) => {
       currentPage: page,
       totalPages,
     });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Read one item
+app.get("/api/items/:id", async (req, res) => {
+  try {
+    const itemId = req.params.id;
+    const item = await itemsCollection.findOne({ _id: new ObjectId(itemId) });
+    res.json(item);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
